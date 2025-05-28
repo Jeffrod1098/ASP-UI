@@ -1,0 +1,40 @@
+<div class="w-full h-screen bg-cover bg-center bg-no-repeat text-white relative"
+     style="background-image: url('https://images.unsplash.com/photo-1512934618676-285ad42c23f5?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+  <!-- Dark Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+
+  <!-- Foreground Content -->
+  <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">NYC Alternate Side Parking</h1>
+    <p class="text-lg text-gray-300 mb-8 max-w-xl">
+      Stay updated with the latest alternate side parking status in New York City.
+    </p>
+
+    <!-- Info Card -->
+    <div class="bg-white text-gray-800 shadow-xl rounded-lg p-6 w-full max-w-lg">
+      <h2 class="text-xl font-semibold mb-2">Today's Parking Status</h2>
+      <p class="text-sm text-gray-500 mb-4">Live update from NYC parking authority</p>
+
+      <!-- API Info -->
+      <!-- <div *ngIf="parkingInfo; else loading"> -->
+        <div>
+        <p class="text-lg font-medium">
+          <!-- {{ parkingInfo.message }} -->
+        </p>
+        <p class="text-sm text-gray-600 mt-2">
+          <!-- Last updated: {{ parkingInfo.timestamp | date:'short' }} -->
+        </p>
+      </div>
+
+      <!-- Loading -->
+      <ng-template #loading>
+        <p class="text-gray-500">Fetching parking info...</p>
+      </ng-template>
+    </div>
+
+    <!-- Sign Out -->
+    <button routerLink="/" class="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+      Sign Out
+    </button>
+  </div>
+</div>
