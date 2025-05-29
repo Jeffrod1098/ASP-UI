@@ -10,31 +10,50 @@
       Stay updated with the latest alternate side parking status in New York City.
     </p>
 
-    <!-- Info Card -->
+
+
     <div class="bg-white text-gray-800 shadow-xl rounded-lg p-6 w-full max-w-lg">
+  <h2 class="text-xl font-semibold mb-2">Today's Parking Status</h2>
+  <p class="text-sm text-gray-500 mb-4">Live update from NYC parking authority</p>
+
+  <div *ngIf="isLoading" class="text-gray-500">Fetching parking info...</div>
+
+  <div *ngIf="!isLoading && !error">
+    <p class="text-lg font-medium">{{ parkingMessage }}</p>
+  </div>
+
+  <div *ngIf="error" class="text-red-500">
+    {{ error }}
+  </div>
+</div>
+
+    <!-- Start Info Card -->
+    <!-- <div class="bg-white text-gray-800 shadow-xl rounded-lg p-6 w-full max-w-lg">
       <h2 class="text-xl font-semibold mb-2">Today's Parking Status</h2>
-      <p class="text-sm text-gray-500 mb-4">Live update from NYC parking authority</p>
+      <p class="text-sm text-gray-500 mb-4">Live update from NYC parking authority</p> -->
 
       <!-- API Info -->
-      <!-- <div *ngIf="parkingInfo; else loading"> -->
+      <!-- <div *ngIf="parkingInfo; else loading"> 
         <div>
         <p class="text-lg font-medium">
-          <!-- {{ parkingInfo.message }} -->
+          {{ parkingInfo.message }} 
         </p>
         <p class="text-sm text-gray-600 mt-2">
-          <!-- Last updated: {{ parkingInfo.timestamp | date:'short' }} -->
+           Last updated: {{ parkingInfo.timestamp }} 
         </p>
-      </div>
+      </div> -->
 
       <!-- Loading -->
-      <ng-template #loading>
+      <!-- <ng-template #loading>
         <p class="text-gray-500">Fetching parking info...</p>
       </ng-template>
-    </div>
+    </div> -->
+    <!-- END OF INFO CARD -->
 
-    <!-- Sign Out -->
-    <button routerLink="/" class="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
-      Sign Out
+
+    <!-- Sign In -->
+    <button routerLink="/signin" class="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+      Sign In
     </button>
   </div>
 </div>
