@@ -11,19 +11,19 @@ import { RouterModule } from '@angular/router';
   styleUrl: './landing.component.css'
 })
 export class LandingComponent implements OnInit {
-  parkingMessage: string = '';
+  parkingMessage: any= {};
   isLoading = true;
   error = '';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get('https://localhost:7208/api/WebScrapper/scrape', { responseType: 'text' })
+    this.http.get('https://localhost:7208/api/WebScrapper/scrape')
       .subscribe({
-        next: (response: string) => {
+        next: (response: any) => {
           this.parkingMessage = response;
           this.isLoading = false;
-          console.log(response)
+          console.log(response.message)
         },
         error: (err) => {
           console.error('API error:', err);

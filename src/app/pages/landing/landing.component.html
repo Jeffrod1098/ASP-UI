@@ -19,7 +19,7 @@
   <div *ngIf="isLoading" class="text-gray-500">Fetching parking info...</div>
 
   <div *ngIf="!isLoading && !error">
-    <p class="text-lg font-medium">{{ parkingMessage }}</p>
+    <p class="text-lg font-medium">{{ parkingMessage.message }}</p>
   </div>
 
   <div *ngIf="error" class="text-red-500">
