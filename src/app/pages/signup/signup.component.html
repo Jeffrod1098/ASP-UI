@@ -15,23 +15,17 @@
       <h1 class="text-3xl font-bold text-gray-800">Sign Up</h1>
       <p class="text-sm text-gray-500 mt-2">Create your account to get started</p>
     </div>
-    <form>
-      <div class="mb-4">
-        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-        <input
-          id="name"
-          type="text"
-          placeholder="John Doe"
-          class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        />
-      </div>
+    <form (ngSubmit)="register()" #signupForm="ngForm">
       <div class="mb-4">
         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
         <input
           id="email"
           type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
           placeholder="you@example.com"
-          class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
         />
       </div>
 
@@ -39,18 +33,23 @@
             <label for="phonenumber" class="block text-sm font-medium text-gray-700 mb-1">Phone Number (Optional)</label>
             <input
             id="phonenumber"
+            name="phoneNumber"
+            [(ngModel)]="phoneNumber"
             type="text"
             placeholder="(999) 777-6969"
-            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
             />
       </div>
       <div class="mb-6">
         <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
         <input
           id="password"
+          name="password"
+          [(ngModel)]="password"
           type="password"
+          required
           placeholder="••••••••"
-          class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-800"
         />
       </div>
       <button

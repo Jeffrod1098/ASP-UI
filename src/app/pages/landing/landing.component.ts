@@ -18,7 +18,7 @@ export class LandingComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get('https://localhost:7208/api/WebScrapper/scrape')
+    this.http.get('https://localhost:7208/api/WebScrapper/latest')
       .subscribe({
         next: (response: any) => {
           this.parkingMessage = response;
