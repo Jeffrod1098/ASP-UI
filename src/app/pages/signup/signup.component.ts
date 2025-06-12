@@ -18,6 +18,7 @@ export class SignupComponent {
   password = '';
   errorMessage = '';
   successMessage = '';
+  registrationSuccess = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -30,13 +31,17 @@ export class SignupComponent {
 
     this.authService.register(user).subscribe({
       next: () => {
-        this.successMessage = 'Registration successful!';
-        this.router.navigate(['/signin']);
+        this.registrationSuccess = true;
+        this.successMessage = 'User registered successfully!';
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Registration failed.';
         console.error(err);
       }
     });
+  }
+
+  goToSettings() {
+    this.router.navigate(['/account-settings']);
   }
 }
