@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
+import { UserService,UserSettings } from '../../services/user.service';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
   styleUrl: './user-settings.component.css'
 })
 export class UserSettingsComponent implements OnInit {
-  user = {
+  user: UserSettings = {
     email: '',
     phoneNumber: '',
     isSubscribedSMSDaily: false,

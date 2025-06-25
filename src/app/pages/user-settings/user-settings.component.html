@@ -1,3 +1,4 @@
+
 <div class="w-full h-screen bg-cover bg-center bg-no-repeat relative flex items-center justify-center"
   style="background-image: url('https://images.unsplash.com/photo-1512934618676-285ad42c23f5?q=80&w=2670&auto=format&fit=crop');">
 
@@ -21,26 +22,42 @@
     </div>
 
     <div class="mb-4">
-      <label class="block text-gray-700">Notification Preferences</label>
+      <label class="block text-gray-700 mb-3">Notification Preferences</label>
 
-      <div class="flex items-center gap-2 mt-2">
-        <input type="checkbox" [(ngModel)]="user.isSubscribedSMSDaily" name="smsDaily">
-        <label>SMS Daily</label>
+      <!-- SMS Daily Toggle -->
+      <div class="py-2">
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" [(ngModel)]="user.isSubscribedSMSDaily" name="smsDaily" class="sr-only peer">
+          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+          <span class="ms-3 text-sm font-medium text-gray-700">SMS Daily</span>
+        </label>
       </div>
 
-      <div class="flex items-center gap-2">
-        <input type="checkbox" [(ngModel)]="user.isSubscribedSMSWeekly" name="smsWeekly">
-        <label>SMS Weekly</label>
+      <!-- SMS Weekly Toggle -->
+      <div class="py-2">
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" [(ngModel)]="user.isSubscribedSMSWeekly" name="smsWeekly" class="sr-only peer">
+          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+          <span class="ms-3 text-sm font-medium text-gray-700">SMS Weekly</span>
+        </label>
       </div>
 
-      <div class="flex items-center gap-2">
-        <input type="checkbox" [(ngModel)]="user.isSubscribedEmailDaily" name="emailDaily">
-        <label>Email Daily</label>
+      <!-- Email Daily Toggle -->
+      <div class="py-2">
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" [(ngModel)]="user.isSubscribedEmailDaily" name="emailDaily" class="sr-only peer">
+          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+          <span class="ms-3 text-sm font-medium text-gray-700">Email Daily</span>
+        </label>
       </div>
 
-      <div class="flex items-center gap-2">
-        <input type="checkbox" [(ngModel)]="user.isSubscribedEmailWeekly" name="emailWeekly">
-        <label>Email Weekly</label>
+      <!-- Email Weekly Toggle -->
+      <div class="py-2">
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" [(ngModel)]="user.isSubscribedEmailWeekly" name="emailWeekly" class="sr-only peer">
+          <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+          <span class="ms-3 text-sm font-medium text-gray-700">Email Weekly</span>
+        </label>
       </div>
     </div>
 
@@ -53,4 +70,3 @@
     </button>
   </form>
   </div>
-</div>
