@@ -33,6 +33,7 @@ export class SignupComponent {
       next: () => {
         this.registrationSuccess = true;
         this.successMessage = 'User registered successfully!';
+        this.router.navigate(['/account-settings']);
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Registration failed.';

@@ -22,5 +22,9 @@ login(user: { email: string; password: string }) {
         localStorage.setItem('jwt', response.token);
       })
     );
-}
+  }
+
+  logout(): void {
+    localStorage.removeItem('jwt');
+  }
 }

@@ -3,6 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-signin',
@@ -16,7 +19,7 @@ export class SigninComponent {
   email = '';
   password = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
 
   login() {
     const user = {
@@ -35,6 +38,7 @@ export class SigninComponent {
         next: () => {
           console.log('Login successful');
           // redirect or show UI feedback
+          this.router.navigate(['/account-settings']);
         },
         error: err => {
           console.error('Login failed', err);
