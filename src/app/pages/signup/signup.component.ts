@@ -33,7 +33,7 @@ export class SignupComponent {
       next: () => {
         this.registrationSuccess = true;
         this.successMessage = 'User registered successfully!';
-        this.router.navigate(['/account-settings']);
+        this.router.navigate(['/userPage']);
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Registration failed.';
@@ -43,6 +43,6 @@ export class SignupComponent {
   }
 
   goToSettings() {
-    this.router.navigate(['/account-settings']);
+    this.router.navigate(['/userPage']);
   }
 }

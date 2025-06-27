@@ -16,7 +16,7 @@ export class AuthService {
   }
 
 login(user: { email: string; password: string }) {
-  return this.http.post<{ token: string }>('https://localhost:5001/api/auth/login', user)
+  return this.http.post<{ token: string }>(`${this.apiUrl}/login`, user)
     .pipe(
       tap(response => {
         localStorage.setItem('jwt', response.token);
