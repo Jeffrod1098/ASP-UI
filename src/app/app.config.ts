@@ -11,22 +11,30 @@ export function tokenGetter() {
   return localStorage.getItem('jwt');
 }
 
+// export const appConfig: ApplicationConfig = {
+//   providers: [
+//     provideZoneChangeDetection({ eventCoalescing: true }),
+//     provideHttpClient(),
+//     provideRouter(routes),
+//     importProvidersFrom(
+//       JwtModule.forRoot({
+//         config: {
+//           tokenGetter: tokenGetter,
+//           allowedDomains: ['localhost:7208'], // Your API domain
+//           disallowedRoutes: [
+//             'https://localhost:7208/api/auth/login',
+//             'https://localhost:7208/api/auth/register'
+//           ]
+//         }
+//       })
+//     )
+//   ]
+// };
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideHttpClient(),
-    provideRouter(routes),
-    importProvidersFrom(
-      JwtModule.forRoot({
-        config: {
-          tokenGetter: tokenGetter,
-          allowedDomains: ['localhost:7208'], // Your API domain
-          disallowedRoutes: [
-            'https://localhost:7208/api/auth/login',
-            'https://localhost:7208/api/auth/register'
-          ]
-        }
-      })
-    )
+    provideRouter(routes)
   ]
 };

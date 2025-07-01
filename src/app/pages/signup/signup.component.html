@@ -1,10 +1,6 @@
 <div class="w-full h-screen bg-cover bg-center bg-no-repeat relative flex items-center justify-center"
   style="background-image: url('https://images.unsplash.com/photo-1512934618676-285ad42c23f5?q=80&w=2670&auto=format&fit=crop');">
   
-  <div class="absolute top-6 left-6">
-    <a routerLink="/" class="text-white hover:text-gray-300 text-sm flex items-center gap-1">← Go Back</a>
-  </div>
-
   <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-gray-800">
     <!-- Show success message after registration -->
     <ng-container *ngIf="!registrationSuccess; else successBlock">
@@ -13,7 +9,8 @@
         <p class="text-sm text-gray-500 mt-2">Create your account to get started</p>
       </div>
 
-      <form (ngSubmit)="register()">
+      <form (ngSubmit)="register()" #signupForm="ngForm">
+        <!-- Email Field -->
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium mb-1">Email</label>
           <input
@@ -22,20 +19,48 @@
             [(ngModel)]="email"
             type="email"
             required
+            email
+            #emailField="ngModel"
+            [class.border-red-500]="emailField.invalid && emailField.touched"
+            [class.border-green-500]="emailField.valid && emailField.touched"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          
+          <!-- Email validation messages -->
+          <div *ngIf="emailField.invalid && emailField.touched" class="text-red-500 text-xs mt-1">
+            <span *ngIf="emailField.errors?.['required']">Email is required</span>
+            <span *ngIf="emailField.errors?.['email']">Please enter a valid email address</span>
+          </div>
+          <div *ngIf="emailField.valid && emailField.touched" class="text-green-500 text-xs mt-1">
+            ✓ Valid email address
+          </div>
         </div>
 
+        <!-- Phone Number Field -->
         <div class="mb-4">
           <label for="phoneNumber" class="block text-sm font-medium mb-1">Phone Number (Optional)</label>
           <input
             id="phoneNumber"
             name="phoneNumber"
             [(ngModel)]="phoneNumber"
-            type="text"
+            type="tel"
+            pattern="^[\+]?[(]?[\d\s\-\(\)]{10,15}$"
+            #phoneField="ngModel"
+            [class.border-red-500]="phoneField.invalid && phoneField.touched && phoneNumber"
+            [class.border-green-500]="phoneField.valid && phoneField.touched && phoneNumber"
+            placeholder="(555) 123-4567"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          
+          <!-- Phone validation messages -->
+          <div *ngIf="phoneField.invalid && phoneField.touched && phoneNumber" class="text-red-500 text-xs mt-1">
+            <span *ngIf="phoneField.errors?.['pattern']">Please enter a valid phone number (10-15 digits)</span>
+          </div>
+          <div *ngIf="phoneField.valid && phoneField.touched && phoneNumber" class="text-green-500 text-xs mt-1">
+            ✓ Valid phone number
+          </div>
         </div>
 
-        <div class="mb-6">
+        <!-- Password Field -->
+        <div class="mb-4">
           <label for="password" class="block text-sm font-medium mb-1">Password</label>
           <input
             id="password"
@@ -43,13 +68,81 @@
             [(ngModel)]="password"
             type="password"
             required
+            minlength="8"
+            #passwordField="ngModel"
+            [class.border-red-500]="passwordField.invalid && passwordField.touched"
+            [class.border-green-500]="passwordField.valid && passwordField.touched"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          
+          <!-- Password validation messages -->
+          <div *ngIf="passwordField.invalid && passwordField.touched" class="text-red-500 text-xs mt-1">
+            <span *ngIf="passwordField.errors?.['required']">Password is required</span>
+            <span *ngIf="passwordField.errors?.['minlength']">Password must be at least 8 characters long</span>
+          </div>
+          <div *ngIf="passwordField.valid && passwordField.touched" class="text-green-500 text-xs mt-1">
+            ✓ Password meets requirements
+          </div>
+          
+          <!-- Password strength indicator -->
+          <div class="mt-2">
+            <div class="text-xs text-gray-600 mb-1">Password strength:</div>
+            <div class="w-full bg-gray-200 rounded-full h-2">
+              <div 
+                class="h-2 rounded-full transition-all duration-300"
+                [class]="getPasswordStrengthClass()"
+                [style.width.%]="getPasswordStrength()">
+              </div>
+            </div>
+            <div class="text-xs mt-1" [class]="getPasswordStrengthTextClass()">
+              {{ getPasswordStrengthText() }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="mb-6">
+          <label for="confirmPassword" class="block text-sm font-medium mb-1">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            type="password"
+            required
+            #confirmPasswordField="ngModel"
+            [class.border-red-500]="!passwordsMatch() && confirmPasswordField.touched"
+            [class.border-green-500]="passwordsMatch() && confirmPasswordField.touched && confirmPassword"
+            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          
+          <!-- Confirm password validation messages -->
+          <div *ngIf="confirmPasswordField.touched && confirmPassword" class="text-xs mt-1">
+            <span *ngIf="!passwordsMatch()" class="text-red-500">Passwords do not match</span>
+            <span *ngIf="passwordsMatch()" class="text-green-500">✓ Passwords match</span>
+          </div>
+        </div>
+
+        <!-- Form validation summary -->
+        <div *ngIf="!isFormValid() && (signupForm.submitted || signupForm.touched)" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p class="text-red-600 text-sm font-medium mb-2">Please fix the following issues:</p>
+          <ul class="text-red-600 text-xs list-disc list-inside space-y-1">
+            <li *ngIf="emailField.invalid">Valid email address required</li>
+            <li *ngIf="passwordField.invalid">Password must be at least 8 characters</li>
+            <li *ngIf="!passwordsMatch() && confirmPassword">Passwords must match</li>
+            <li *ngIf="phoneField.invalid && phoneNumber">Valid phone number required</li>
+          </ul>
         </div>
 
         <button
           type="submit"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300">
-          Sign Up
+          [disabled]="loading || !isFormValid()"
+          class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white font-semibold py-2 rounded-lg transition duration-300">
+          <span *ngIf="!loading">Sign Up</span>
+          <span *ngIf="loading" class="flex items-center justify-center">
+            <svg class="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+            </svg>
+            Creating Account...
+          </span>
         </button>
 
         <p class="text-red-600 mt-4" *ngIf="errorMessage">{{ errorMessage }}</p>

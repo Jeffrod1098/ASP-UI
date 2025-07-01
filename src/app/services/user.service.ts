@@ -11,6 +11,15 @@ export interface UserSettings {
   isSubscribedEmailWeekly: boolean;
 }
 
+// Create a separate interface for update requests
+export interface UpdateSettingsRequest {
+  phoneNumber: string;
+  isSubscribedSMSDaily: boolean;
+  isSubscribedSMSWeekly: boolean;
+  isSubscribedEmailDaily: boolean;
+  isSubscribedEmailWeekly: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,23 +33,15 @@ export class UserService {
     console.log('=== TOKEN DEBUG ===');
     console.log('Token exists:', !!token);
     console.log('Token length:', token?.length || 0);
-    console.log('Token preview:', token?.substring(0, 50) + '...');
-    console.log('Full token:', token);
     
     if (!token) {
       console.error('❌ No token found in localStorage');
-      console.log('Available keys in localStorage:', Object.keys(localStorage));
     }
     
-    const headers = new HttpHeaders({
+    return new HttpHeaders({
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-    
-    console.log('Authorization header:', headers.get('Authorization'));
-    console.log('==================');
-    
-    return headers;
   }
 
   getUserProfile(): Observable<UserSettings> {
@@ -51,9 +52,6 @@ export class UserService {
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('❌ getUserProfile error:', error);
-          console.error('Error status:', error.status);
-          console.error('Error message:', error.message);
-          console.error('Error body:', error.error);
           return throwError(() => error);
         })
       );
@@ -61,9 +59,21 @@ export class UserService {
 
   updateUserProfile(user: UserSettings): Observable<any> {
     console.log('🔄 Making updateUserProfile request...');
+    console.log('Full user object:', user);
+    
+    // Create the request object without email
+    const updateRequest: UpdateSettingsRequest = {
+      phoneNumber: user.phoneNumber,
+      isSubscribedSMSDaily: user.isSubscribedSMSDaily,
+      isSubscribedSMSWeekly: user.isSubscribedSMSWeekly,
+      isSubscribedEmailDaily: user.isSubscribedEmailDaily,
+      isSubscribedEmailWeekly: user.isSubscribedEmailWeekly
+    };
+    
+    console.log('Update request (without email):', updateRequest);
     const headers = this.getAuthHeaders();
     
-    return this.http.post(`${this.apiUrl}/settings`, user, { headers })
+    return this.http.post(`${this.apiUrl}/settings`, updateRequest, { headers })
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.error('❌ updateUserProfile error:', error);

@@ -16,33 +16,138 @@ export class SignupComponent {
   email = '';
   phoneNumber = '';
   password = '';
+  confirmPassword = '';
   errorMessage = '';
   successMessage = '';
   registrationSuccess = false;
+  loading = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  // Check if passwords match
+  passwordsMatch(): boolean {
+    return this.password === this.confirmPassword;
+  }
+
+  // Validate email format (additional to built-in validation)
+  isValidEmail(): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(this.email);
+  }
+
+  // Validate phone number format
+  isValidPhone(): boolean {
+    if (!this.phoneNumber) return true; // Optional field
+    const phoneRegex = /^[\+]?[(]?[\d\s\-\(\)]{10,15}$/;
+    return phoneRegex.test(this.phoneNumber);
+  }
+
+  // Check if password meets strength requirements
+  getPasswordStrength(): number {
+    let strength = 0;
+    if (this.password.length >= 8) strength += 25;
+    if (/[a-z]/.test(this.password)) strength += 25;
+    if (/[A-Z]/.test(this.password)) strength += 25;
+    if (/[\d\W]/.test(this.password)) strength += 25;
+    return strength;
+  }
+
+  getPasswordStrengthClass(): string {
+    const strength = this.getPasswordStrength();
+    if (strength <= 25) return 'bg-red-500';
+    if (strength <= 50) return 'bg-yellow-500';
+    if (strength <= 75) return 'bg-blue-500';
+    return 'bg-green-500';
+  }
+
+  getPasswordStrengthText(): string {
+    const strength = this.getPasswordStrength();
+    if (strength <= 25) return 'Weak';
+    if (strength <= 50) return 'Fair';
+    if (strength <= 75) return 'Good';
+    return 'Strong';
+  }
+
+  getPasswordStrengthTextClass(): string {
+    const strength = this.getPasswordStrength();
+    if (strength <= 25) return 'text-red-500';
+    if (strength <= 50) return 'text-yellow-500';
+    if (strength <= 75) return 'text-blue-500';
+    return 'text-green-500';
+  }
+
+  // Check if entire form is valid
+isFormValid(): boolean {
+  const hasEmail = this.email.trim().length > 0;
+  const hasValidEmail = this.isValidEmail();
+  const hasPassword = this.password.length > 0;
+  const hasMinPasswordLength = this.password.length >= 8;
+  const passwordsDoMatch = this.passwordsMatch();
+  const hasValidPhone = this.isValidPhone();
+
+  return (
+    hasEmail && 
+    hasValidEmail && 
+    hasPassword && 
+    hasMinPasswordLength && 
+    passwordsDoMatch && 
+    hasValidPhone
+  );
+}
+
   register() {
+    // Clear previous errors
+    this.errorMessage = '';
+
+    // Final validation check
+    if (!this.isFormValid()) {
+      this.errorMessage = 'Please fix all validation errors before submitting.';
+      return;
+    }
+
+    this.loading = true;
+    
     const user = {
       email: this.email,
       phoneNumber: this.phoneNumber,
       password: this.password
     };
 
+    console.log('🔄 Attempting registration with:', { 
+      email: this.email, 
+      phoneNumber: this.phoneNumber,
+      password: '***' 
+    });
+
     this.authService.register(user).subscribe({
       next: () => {
+        console.log('✅ Registration successful');
         this.registrationSuccess = true;
         this.successMessage = 'User registered successfully!';
-        this.router.navigate(['/userPage']);
+        this.loading = false;
+        
+        // Auto-redirect after a short delay
+        setTimeout(() => {
+          this.goToSettings();
+        }, 2000);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Registration failed.';
-        console.error(err);
+        console.error('❌ Registration failed:', err);
+        this.loading = false;
+        
+        // Handle different error types
+        if (err.status === 400) {
+          this.errorMessage = err.error?.message || 'Invalid registration data.';
+        } else if (err.status === 409) {
+          this.errorMessage = 'Email already in use.';
+        } else {
+          this.errorMessage = 'Registration failed. Please try again.';
+        }
       }
     });
   }
 
   goToSettings() {
-    this.router.navigate(['/userPage']);
+    this.router.navigate(['/signin']); // Redirect to signin after registration
   }
 }
