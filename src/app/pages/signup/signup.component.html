@@ -36,7 +36,8 @@
         </div>
 
         <!-- Phone Number Field -->
-        <div class="mb-4">
+
+        <!-- <div class="mb-4">
           <label for="phoneNumber" class="block text-sm font-medium mb-1">Phone Number (Optional)</label>
           <input
             id="phoneNumber"
@@ -48,16 +49,17 @@
             [class.border-red-500]="phoneField.invalid && phoneField.touched && phoneNumber"
             [class.border-green-500]="phoneField.valid && phoneField.touched && phoneNumber"
             placeholder="(555) 123-4567"
-            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" /> -->
           
           <!-- Phone validation messages -->
-          <div *ngIf="phoneField.invalid && phoneField.touched && phoneNumber" class="text-red-500 text-xs mt-1">
+
+          <!-- <div *ngIf="phoneField.invalid && phoneField.touched && phoneNumber" class="text-red-500 text-xs mt-1">
             <span *ngIf="phoneField.errors?.['pattern']">Please enter a valid phone number (10-15 digits)</span>
           </div>
           <div *ngIf="phoneField.valid && phoneField.touched && phoneNumber" class="text-green-500 text-xs mt-1">
             ✓ Valid phone number
           </div>
-        </div>
+        </div> -->
 
         <!-- Password Field -->
         <div class="mb-4">
@@ -127,7 +129,7 @@
             <li *ngIf="emailField.invalid">Valid email address required</li>
             <li *ngIf="passwordField.invalid">Password must be at least 8 characters</li>
             <li *ngIf="!passwordsMatch() && confirmPassword">Passwords must match</li>
-            <li *ngIf="phoneField.invalid && phoneNumber">Valid phone number required</li>
+            <!-- <li *ngIf="phoneField.invalid && phoneNumber">Valid phone number required</li> -->
           </ul>
         </div>
 
