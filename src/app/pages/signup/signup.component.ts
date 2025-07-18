@@ -36,11 +36,11 @@ export class SignupComponent {
   }
 
   // Validate phone number format
-  isValidPhone(): boolean {
-    if (!this.phoneNumber) return true; // Optional field
-    const phoneRegex = /^[\+]?[(]?[\d\s\-\(\)]{10,15}$/;
-    return phoneRegex.test(this.phoneNumber);
-  }
+  // isValidPhone(): boolean {
+  //   if (!this.phoneNumber) return true; // Optional field
+  //   const phoneRegex = /^[\+]?[(]?[\d\s\-\(\)]{10,15}$/;
+  //   return phoneRegex.test(this.phoneNumber);
+  // }
 
   // Check if password meets strength requirements
   getPasswordStrength(): number {
@@ -83,15 +83,15 @@ isFormValid(): boolean {
   const hasPassword = this.password.length > 0;
   const hasMinPasswordLength = this.password.length >= 8;
   const passwordsDoMatch = this.passwordsMatch();
-  const hasValidPhone = this.isValidPhone();
+  // const hasValidPhone = this.isValidPhone();
 
   return (
     hasEmail && 
     hasValidEmail && 
     hasPassword && 
     hasMinPasswordLength && 
-    passwordsDoMatch && 
-    hasValidPhone
+    passwordsDoMatch 
+    // hasValidPhone
   );
 }
 
@@ -99,9 +99,8 @@ isFormValid(): boolean {
     // Clear previous errors
     this.errorMessage = '';
 
-    // Final validation check
     if (!this.isFormValid()) {
-      this.errorMessage = 'Please fix all validation errors before submitting.';
+      this.errorMessage = 'Please fix or complete any form before submitting.';
       return;
     }
 
@@ -112,12 +111,6 @@ isFormValid(): boolean {
       phoneNumber: this.phoneNumber,
       password: this.password
     };
-
-    console.log('🔄 Attempting registration with:', { 
-      email: this.email, 
-      phoneNumber: this.phoneNumber,
-      password: '***' 
-    });
 
     this.authService.register(user).subscribe({
       next: () => {
@@ -132,17 +125,33 @@ isFormValid(): boolean {
         }, 2000);
       },
       error: (err) => {
-        console.error('❌ Registration failed:', err);
         this.loading = false;
+        console.error(err);
+        this.errorMessage = 'Registration failed. Please try again.';
         
-        // Handle different error types
-        if (err.status === 400) {
-          this.errorMessage = err.error?.message || 'Invalid registration data.';
-        } else if (err.status === 409) {
-          this.errorMessage = 'Email already in use.';
-        } else {
-          this.errorMessage = 'Registration failed. Please try again.';
+        // Check if error has a response body with message
+        if (err.error) {
+          if (typeof err.error === 'string') {
+            this.errorMessage = err.error;
+          } else if (err.error.message) {
+            this.errorMessage = err.error.message;
+          } else if (err.error.error) {
+            this.errorMessage = err.error.error;
+          }
         }
+
+        // if (err.status === 400) {
+        //   this.errorMessage = err.error?.message || 'Invalid registration data.';
+        //   if (err.error === "Email already in use") {
+        //   this.errorMessage = 'Email already in use.';
+        // }
+        // } 
+        // else if (err.error === "Email already in use") {
+        //   this.errorMessage = 'Email already in use.';
+        // }
+        // else {
+        //   this.errorMessage = 'Registration failed. Please try again.';
+        // }
       }
     });
   }

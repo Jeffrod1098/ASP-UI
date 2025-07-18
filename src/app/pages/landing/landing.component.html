@@ -54,6 +54,89 @@
     <!-- Sign In -->
     <button routerLink="/signin" class="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
       Sign In
-    </button>
+    </button> <button 
+    (click)="openContactModal()"
+    class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 z-40 group">
+    
+    <!-- Message Icon -->
+    <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+    </svg>
+    
+    <!-- Tooltip -->
+    <div class="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+      Support & Feedback
+      <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
+    </div>
+  </button>
+
+  <!-- Contact Modal -->
+  <div *ngIf="showContactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="closeContactModal()">
+    <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4 transform transition-all duration-300 ease-in-out"
+         (click)="$event.stopPropagation()">
+      
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Support & Feedback</h2>
+        <button (click)="closeContactModal()" class="text-gray-500 hover:text-gray-700 transition-colors">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="mb-6">
+        <div class="text-center mb-6">
+          <div class="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">We'd Love to Hear From You!</h3>
+          <p class="text-gray-600 text-sm leading-relaxed">
+            Your feedback helps us improve the ASP NYC Notifier. Whether you need technical support, 
+            have suggestions for new features, or want to share your experience with our service, 
+            we're here to listen.
+          </p>
+        </div>
+
+        <div class="bg-gray-50 rounded-lg p-4 mb-6">
+          <h4 class="font-semibold text-gray-800 mb-3 text-center">How We Can Help:</h4>
+          <div class="grid grid-cols-2 gap-2 text-sm">
+            <div class="flex items-center text-gray-500">
+              Technical Support
+            </div>
+            <div class="flex items-center text-gray-500">
+              Feature Requests
+            </div>
+            <div class="flex items-center text-gray-500">
+              General Feedback
+            </div>
+            <div class="flex items-center text-gray-500">
+              Bug Reports
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Button -->
+        <button 
+          (click)="sendEmail()"
+          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+          Send Email to aspnycnotifier&#64;gmail.com
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="text-center">
+        <p class="text-xs text-gray-500">
+          We typically respond within 24 hours
+        </p>
+      </div>
+    </div>
+  </div>
   </div>
 </div>

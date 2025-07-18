@@ -11,9 +11,10 @@ import { RouterModule } from '@angular/router';
   styleUrl: './landing.component.css'
 })
 export class LandingComponent implements OnInit {
-  parkingMessage: any= {};
+  parkingMessage: any = {};
   isLoading = true;
   error = '';
+  showContactModal = false;
 
   constructor(private http: HttpClient) {}
 
@@ -31,5 +32,19 @@ export class LandingComponent implements OnInit {
           this.isLoading = false;
         }
       });
+  }
+
+  openContactModal() {
+    this.showContactModal = true;
+  }
+
+  closeContactModal() {
+    this.showContactModal = false;
+  }
+
+  sendEmail() {
+    const mailtoLink = 'mailto:aspnycnotifier@gmail.com?subject=Support/Feedback - ASP NYC Notifier';
+    window.location.href = mailtoLink;
+    this.closeContactModal();
   }
 }
