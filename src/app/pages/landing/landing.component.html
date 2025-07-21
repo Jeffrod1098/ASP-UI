@@ -2,15 +2,12 @@
      style="background-image: url('https://images.unsplash.com/photo-1512934618676-285ad42c23f5?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
   <!-- Dark Overlay -->
   <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-
   <!-- Foreground Content -->
   <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4">
     <h1 class="text-4xl md:text-5xl font-bold mb-4">NYC Alternate Side Parking</h1>
     <p class="text-lg text-gray-300 mb-8 max-w-xl">
       Stay updated with the latest alternate side parking status in New York City.
     </p>
-
-
 
     <div class="bg-white text-gray-800 shadow-xl rounded-lg p-6 w-full max-w-lg">
   <h2 class="text-xl font-semibold mb-2">Today's Parking Status</h2>
@@ -27,30 +24,6 @@
   </div>
 </div>
 
-    <!-- Start Info Card -->
-    <!-- <div class="bg-white text-gray-800 shadow-xl rounded-lg p-6 w-full max-w-lg">
-      <h2 class="text-xl font-semibold mb-2">Today's Parking Status</h2>
-      <p class="text-sm text-gray-500 mb-4">Live update from NYC parking authority</p> -->
-
-      <!-- API Info -->
-      <!-- <div *ngIf="parkingInfo; else loading"> 
-        <div>
-        <p class="text-lg font-medium">
-          {{ parkingInfo.message }} 
-        </p>
-        <p class="text-sm text-gray-600 mt-2">
-           Last updated: {{ parkingInfo.timestamp }} 
-        </p>
-      </div> -->
-
-      <!-- Loading -->
-      <!-- <ng-template #loading>
-        <p class="text-gray-500">Fetching parking info...</p>
-      </ng-template>
-    </div> -->
-    <!-- END OF INFO CARD -->
-
-
     <!-- Sign In -->
     <button routerLink="/signin" class="mt-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
       Sign In
@@ -62,8 +35,6 @@
     <svg class="w-6 h-6 group-hover:scale-110 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
     </svg>
-    
-    <!-- Tooltip -->
     <div class="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
       Support & Feedback
       <div class="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
@@ -74,9 +45,7 @@
   <div *ngIf="showContactModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="closeContactModal()">
     <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md mx-4 transform transition-all duration-300 ease-in-out"
          (click)="$event.stopPropagation()">
-      
-      <!-- Header -->
-      <div class="flex justify-between items-center mb-6">
+            <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Support & Feedback</h2>
         <button (click)="closeContactModal()" class="text-gray-500 hover:text-gray-700 transition-colors">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,8 +53,6 @@
           </svg>
         </button>
       </div>
-
-      <!-- Content -->
       <div class="mb-6">
         <div class="text-center mb-6">
           <div class="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
@@ -119,7 +86,6 @@
           </div>
         </div>
 
-        <!-- Contact Button -->
         <button 
           (click)="sendEmail()"
           class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
@@ -130,7 +96,6 @@
         </button>
       </div>
 
-      <!-- Footer -->
       <div class="text-center">
         <p class="text-xs text-gray-500">
           We typically respond within 24 hours
