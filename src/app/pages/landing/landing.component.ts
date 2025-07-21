@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-landing',
@@ -19,7 +20,7 @@ export class LandingComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http.get('https://localhost:7208/api/WebScrapper/latest')
+    this.http.get(`${environment.apiUrl}/WebScrapper/latest`)
       .subscribe({
         next: (response: any) => {
           this.parkingMessage = response;

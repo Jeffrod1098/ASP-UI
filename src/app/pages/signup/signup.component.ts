@@ -114,7 +114,6 @@ isFormValid(): boolean {
 
     this.authService.register(user).subscribe({
       next: () => {
-        console.log('✅ Registration successful');
         this.registrationSuccess = true;
         this.successMessage = 'User registered successfully!';
         this.loading = false;

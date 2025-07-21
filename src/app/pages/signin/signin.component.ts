@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-signin',
@@ -23,7 +24,6 @@ export class SigninComponent {
   constructor(private http: HttpClient, private authService: AuthService, private router: Router) {}
 
   login() {
-    // Clear previous errors
     this.errorMessage = '';
     
     // Validate inputs
@@ -40,31 +40,24 @@ export class SigninComponent {
 
     console.log('🔄 Attempting login with:', { email: this.email, password: '***' });
     
-    this.http.post<{ token: string }>('https://localhost:7208/api/auth/login', user)
+    this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, user)
       .pipe(
-        tap(response => {
-          console.log('✅ Login response received:', response);
-          console.log('Token from response:', response.token);
-          
+        tap(response => {         
           // Clear localStorage first
           localStorage.removeItem('jwt');
           
           // Store the new token
           localStorage.setItem('jwt', response.token);
           
-          // Verify it was stored
           const storedToken = localStorage.getItem('jwt');
-          console.log('Token stored successfully:', !!storedToken);
-          console.log('Stored token matches:', storedToken === response.token);
         })
       )
       .subscribe({
         next: () => {
-          console.log('✅ Login successful, navigating...');
           this.router.navigate(['/userPage']);
         },
         error: err => {
-          console.error('❌ Login failed', err);
+          console.error('Login failed', err);
           this.loading = false;
           
           // Handle different error types
