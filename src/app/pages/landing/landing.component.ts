@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -17,9 +18,13 @@ export class LandingComponent implements OnInit {
   error = '';
   showContactModal = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    // Fetch parking information
     this.http.get(`${environment.apiUrl}/WebScrapper/latest`)
       .subscribe({
         next: (response: any) => {
@@ -33,6 +38,26 @@ export class LandingComponent implements OnInit {
           this.isLoading = false;
         }
       });
+  }
+
+  // Same authentication check method as navbar
+  checkAuthStatus(): boolean {
+    const token = localStorage.getItem('jwt');
+    if (!token) return false;
+
+    // Simple token expiration check
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const currentTime = Math.floor(Date.now() / 1000);
+      return payload.exp > currentTime;
+    } catch {
+      return false;
+    }
+  }
+
+  // Getter for authentication status (same as navbar)
+  get isAuthenticated(): boolean {
+    return this.checkAuthStatus();
   }
 
   openContactModal() {
