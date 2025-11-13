@@ -2,7 +2,6 @@
   <div class="w-full px-6 sm:px-8 lg:px-12">
     <div class="flex justify-between items-center h-16">
       
-      <!-- Left side - Logo/Brand (moved further left) -->
       <div class="flex items-center">
         <button 
           (click)="navigateHome()"
@@ -12,12 +11,9 @@
         </button>
       </div>
 
-      <!-- Spacer to push buttons further right -->
       <div class="flex-1"></div>
 
-      <!-- Right side - Auth buttons (moved further right) -->
       <div class="flex items-center space-x-4">
-        <!-- Show when user is NOT authenticated -->
         <ng-container *ngIf="!isAuthenticated">
           <a 
             routerLink="/signin" 
@@ -33,7 +29,6 @@
           </a>
         </ng-container>
 
-        <!-- Show when user IS authenticated -->
         <ng-container *ngIf="isAuthenticated">
           <a 
             routerLink="/userPage" 

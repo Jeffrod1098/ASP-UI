@@ -33,21 +33,21 @@ export class UserSettingsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('🔄 UserSettings: Loading user profile...');
+    console.log('UserSettings: Loading user profile...');
     this.userService.getUserProfile().subscribe({
       next: (data) => {
-        console.log('✅ UserSettings: Profile loaded:', data);
+        console.log('UserSettings: Profile loaded:', data);
         this.user = data;
       },
       error: (err) => {
-        console.error('❌ UserSettings: Failed to load profile:', err);
+        console.error('UserSettings: Failed to load profile:', err);
         this.errorMessage = 'Failed to load user info.';
       }
     });
   }
 
   updateUser() {
-    console.log('🔄 UserSettings: Updating user settings...');
+    console.log('UserSettings: Updating user settings...');
     console.log('User data to update:', this.user);
     
     // Clear previous messages
@@ -57,12 +57,12 @@ export class UserSettingsComponent implements OnInit {
     
     this.userService.updateUserProfile(this.user).subscribe({
       next: (response) => {
-        console.log('✅ UserSettings: Update successful:', response);
+        console.log('UserSettings: Update successful:', response);
         this.successMessage = 'User settings updated successfully!';
         this.loading = false;
       },
       error: (err) => {
-        console.error('❌ UserSettings: Update failed:', err);
+        console.error('UserSettings: Update failed:', err);
         this.loading = false;
         
         // More specific error messages
@@ -79,11 +79,11 @@ export class UserSettingsComponent implements OnInit {
 
   // Keep your test method
   testToken() {
-    console.log('🧪 Manual token test...');
+    console.log('Manual token test...');
     const token = localStorage.getItem('jwt');
     
     if (!token) {
-      console.error('❌ No token found for manual test');
+      console.error('No token found for manual test');
       return;
     }
     
@@ -95,11 +95,11 @@ export class UserSettingsComponent implements OnInit {
     this.http.get('https://localhost:7208/api/auth/settings', { headers })
       .subscribe({
         next: (data) => {
-          console.log('✅ Manual test successful:', data);
+          console.log('Manual test successful:', data);
           this.user = data as any;
         },
         error: (err) => {
-          console.error('❌ Manual test failed:', err);
+          console.error('Manual test failed:', err);
         }
       });
   }

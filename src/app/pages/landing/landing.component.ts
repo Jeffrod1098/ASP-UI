@@ -24,7 +24,6 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Fetch parking information
     this.http.get(`${environment.apiUrl}/WebScrapper/latest`)
       .subscribe({
         next: (response: any) => {
@@ -40,12 +39,10 @@ export class LandingComponent implements OnInit {
       });
   }
 
-  // Same authentication check method as navbar
   checkAuthStatus(): boolean {
     const token = localStorage.getItem('jwt');
     if (!token) return false;
 
-    // Simple token expiration check
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const currentTime = Math.floor(Date.now() / 1000);

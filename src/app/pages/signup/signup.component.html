@@ -2,7 +2,6 @@
   style="background-image: url('https://images.unsplash.com/photo-1512934618676-285ad42c23f5?q=80&w=2670&auto=format&fit=crop');">
   
   <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md text-gray-800">
-    <!-- Show success message after registration -->
     <ng-container *ngIf="!registrationSuccess; else successBlock">
       <div class="mb-6 text-center">
         <h1 class="text-3xl font-bold">Sign Up</h1>
@@ -10,7 +9,6 @@
       </div>
 
       <form (ngSubmit)="register()" #signupForm="ngForm">
-        <!-- Email Field -->
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium mb-1">Email</label>
           <input
@@ -25,7 +23,6 @@
             [class.border-green-500]="emailField.valid && emailField.touched"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           
-          <!-- Email validation messages -->
           <div *ngIf="emailField.invalid && emailField.touched" class="text-red-500 text-xs mt-1">
             <span *ngIf="emailField.errors?.['required']">Email is required</span>
             <span *ngIf="emailField.errors?.['email']">Please enter a valid email address</span>
@@ -76,7 +73,6 @@
             [class.border-green-500]="passwordField.valid && passwordField.touched"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           
-          <!-- Password validation messages -->
           <div *ngIf="passwordField.invalid && passwordField.touched" class="text-red-500 text-xs mt-1">
             <span *ngIf="passwordField.errors?.['required']">Password is required</span>
             <span *ngIf="passwordField.errors?.['minlength']">Password must be at least 8 characters long</span>
@@ -85,7 +81,6 @@
             ✓ Password meets requirements
           </div>
           
-          <!-- Password strength indicator -->
           <div class="mt-2">
             <div class="text-xs text-gray-600 mb-1">Password strength:</div>
             <div class="w-full bg-gray-200 rounded-full h-2">
@@ -101,7 +96,6 @@
           </div>
         </div>
 
-        <!-- Confirm Password Field -->
         <div class="mb-6">
           <label for="confirmPassword" class="block text-sm font-medium mb-1">Confirm Password</label>
           <input
@@ -115,21 +109,18 @@
             [class.border-green-500]="passwordsMatch() && confirmPasswordField.touched && confirmPassword"
             class="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           
-          <!-- Confirm password validation messages -->
           <div *ngIf="confirmPasswordField.touched && confirmPassword" class="text-xs mt-1">
             <span *ngIf="!passwordsMatch()" class="text-red-500">Passwords do not match</span>
             <span *ngIf="passwordsMatch()" class="text-green-500">✓ Passwords match</span>
           </div>
         </div>
 
-        <!-- Form validation summary -->
         <div *ngIf="!isFormValid() && (signupForm.submitted || signupForm.touched)" class="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
           <p class="text-red-600 text-sm font-medium mb-2">Please fix the following issues:</p>
           <ul class="text-red-600 text-xs list-disc list-inside space-y-1">
             <li *ngIf="emailField.invalid">Valid email address required</li>
             <li *ngIf="passwordField.invalid">Password must be at least 8 characters</li>
             <li *ngIf="!passwordsMatch() && confirmPassword">Passwords must match</li>
-            <!-- <li *ngIf="phoneField.invalid && phoneNumber">Valid phone number required</li> -->
           </ul>
         </div>
 
@@ -156,7 +147,6 @@
       </p>
     </ng-container>
 
-    <!-- Success block shown after registration -->
     <ng-template #successBlock>
       <div class="text-center">
         <h2 class="text-2xl font-bold text-green-600">🎉 {{ successMessage }}</h2>

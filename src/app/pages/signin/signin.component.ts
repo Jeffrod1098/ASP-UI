@@ -26,7 +26,6 @@ export class SigninComponent {
   login() {
     this.errorMessage = '';
     
-    // Validate inputs
     if (!this.email || !this.password) {
       this.errorMessage = 'Please enter both email and password';
       return;
@@ -38,7 +37,7 @@ export class SigninComponent {
       password: this.password
     };
 
-    console.log('🔄 Attempting login with:', { email: this.email, password: '***' });
+    console.log('Attempting login with:', { email: this.email, password: '***' });
     
     this.http.post<{ token: string }>(`${environment.apiUrl}/auth/login`, user)
       .pipe(
@@ -46,7 +45,6 @@ export class SigninComponent {
           // Clear localStorage first
           localStorage.removeItem('jwt');
           
-          // Store the new token
           localStorage.setItem('jwt', response.token);
           
           const storedToken = localStorage.getItem('jwt');
@@ -60,7 +58,6 @@ export class SigninComponent {
           console.error('Login failed', err);
           this.loading = false;
           
-          // Handle different error types
           if (err.status === 401) {
             this.errorMessage = 'Invalid email or password';
           } else if (err.status === 0) {

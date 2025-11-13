@@ -24,12 +24,10 @@ export class SignupComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  // Check if passwords match
   passwordsMatch(): boolean {
     return this.password === this.confirmPassword;
   }
 
-  // Validate email format (additional to built-in validation)
   isValidEmail(): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(this.email);
@@ -42,7 +40,6 @@ export class SignupComponent {
   //   return phoneRegex.test(this.phoneNumber);
   // }
 
-  // Check if password meets strength requirements
   getPasswordStrength(): number {
     let strength = 0;
     if (this.password.length >= 8) strength += 25;
@@ -76,7 +73,6 @@ export class SignupComponent {
     return 'text-green-500';
   }
 
-  // Check if entire form is valid
 isFormValid(): boolean {
   const hasEmail = this.email.trim().length > 0;
   const hasValidEmail = this.isValidEmail();
@@ -118,7 +114,6 @@ isFormValid(): boolean {
         this.successMessage = 'User registered successfully!';
         this.loading = false;
         
-        // Auto-redirect after a short delay
         setTimeout(() => {
           this.goToSettings();
         }, 2000);
@@ -128,7 +123,6 @@ isFormValid(): boolean {
         console.error(err);
         this.errorMessage = 'Registration failed. Please try again.';
         
-        // Check if error has a response body with message
         if (err.error) {
           if (typeof err.error === 'string') {
             this.errorMessage = err.error;
@@ -138,24 +132,11 @@ isFormValid(): boolean {
             this.errorMessage = err.error.error;
           }
         }
-
-        // if (err.status === 400) {
-        //   this.errorMessage = err.error?.message || 'Invalid registration data.';
-        //   if (err.error === "Email already in use") {
-        //   this.errorMessage = 'Email already in use.';
-        // }
-        // } 
-        // else if (err.error === "Email already in use") {
-        //   this.errorMessage = 'Email already in use.';
-        // }
-        // else {
-        //   this.errorMessage = 'Registration failed. Please try again.';
-        // }
       }
     });
   }
 
   goToSettings() {
-    this.router.navigate(['/signin']); // Redirect to signin after registration
+    this.router.navigate(['/signin']);
   }
 }
